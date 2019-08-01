@@ -1,0 +1,48 @@
+#Initial routes
+* Add Landing Page
+* Add Campgrounds page that lists all Campgrounds
+--CHECK--
+
+#Each Campground has:
+* Name
+* Image
+--CHECK--
+
+#Layout and Basic Styling
+* Create our header and footer partials
+* Add in Bootstrap
+--CHECK--
+
+#Create New Skateparks
+* Setup new skatepark POST route 
+* Add in body-parser 
+* Setup route to show form (/skateparks/new)
+* Add basic unstyled form 
+--CHECK--
+
+#Style the skateparks page
+* Add a better Title
+* Make skateparks display in a grid
+--CHECK--
+
+#Add Mongoose
+* Install and configure Mongoose
+* Setup Skatepark model
+* Use Skatepark model inside of our routes
+--CHECK--
+
+#Show Page
+* Review the RESTful routes we've seen so far
+* Add desription to our skatepark model
+* Show db.collection.drop()
+* Add a show route/template
+
+
+RESTful Routing
+
+name        url              verb        desc.   
+============================================================
+INDEX    /skateparks         GET         Displays all the skateparks
+NEW      /skateparks/new     GET         Displays the form to add a skatepark
+CREATE   /skateparks         POST        Adds a new skatepark to the database, then redirects the post to the /skateparks GET route
+SHOW     /skateparks/:id     GET         Shows a description of the skatepark
