@@ -33,7 +33,7 @@ var Skatepark = mongoose.model("Skatepark", skateparkSchema)
 // });
 
 app.get("/", (req, res) => {
-    res.render("home")
+    res.render("home");
 });
 
 //INDEX - Displays all the skateparks
@@ -54,19 +54,19 @@ app.get("/skateparks", (req, res) => {
 app.post("/skateparks", (req, res) => {
     var name = req.body.name;
     var image = req.body.image;
-    var newSkatepark = {"name": name, "image": image};
+    var description = req.body.description;
+    var newSkatepark = {"name": name, "image": image, "description": description};
 
     //create new skatepark and save it to the database
     Skatepark.create(newSkatepark, (err, skatepark) => {
         if(err){
-            console.log(err)
+            console.log(err);
         }
         else{
             //redirect back to skateparks page
             res.redirect("/skateparks");
         }
     });
-
 });
 
 //NEW - Displays the form to add a skatepark
@@ -76,10 +76,15 @@ app.get("/skateparks/new", (req, res) => {
 
 //SHOW - Shows a description of the skatepark
 app.get("/skateparks/:id", (req, res) => {
-    //find the campground with provide id
-
-    //render the show template of that campground
-    res.send("This is the show page");
+    //find the campground with provided id
+    Skatepark.findById(req.params.id, (err, foundSkatepark) => {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            res.render("show", {skatepark: foundSkatepark});
+        }
+    });
 });
 
 app.listen(8080, () => {
