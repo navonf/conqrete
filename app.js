@@ -1,91 +1,69 @@
-var express = require("express");
-var app = express();
-var bodyParser = require("body-parser");
-var request = require("request");
-var mongoose = require("mongoose");
-
-mongoose.connect("mongodb://localhost:27017/skate_yelp", {useNewUrlParser: true});
-
-app.set("view engine", "ejs");
-app.use(express.static("public"));
-app.use(bodyParser.urlencoded({extended: true}));
-
-//Schema setup
-var skateparkSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-var Skatepark = mongoose.model("Skatepark", skateparkSchema)
-
-// Skatepark.create({
-//     name: "Wadsworth Skatepark",
-//     image: "https://assets.simpleviewinc.com/simpleview/image/fetch/c_limit,q_75,w_1200/https://assets.simpleviewinc.com/simpleview/image/upload/crm/flaglercountyfl/DSCN00900-95d657055056a36_95d658b7-5056-a36a-0603bdb5c4e76cb2.jpg",
-//     description: "This skatepark is located in Flagler Beach, FL. The park is compromised of metal pre-fabricated ramps and rails."
-// }, (err, skatepark) => {
-//     if(err){
-//         console.log(err);
-//     }
-//     else{
-//         console.log("Success\n" + skatepark);
-//     }
-// });
-
-app.get("/", (req, res) => {
-    res.render("home");
-});
-
-//INDEX - Displays all the skateparks
-app.get("/skateparks", (req, res) => {
+const   express         = require("express"),
+        app             = express(),
+        bodyParser      = require("body-parser"),
+        mongoose        = require("mongoose"),
+        Comment         = require("./models/comment"), //Comment schema and model
+        User            = require("./models/user"), //User schema and model
+        seedDb          = require("./seeds"),
+        passport        = require("passport"),
+        Skatepark       = require("./models/skatepark"), //Skatepark schema and model
+        LocalStrategy   = require("passport-local"),
+        methodOverride  = require("method-override"),
+        flash           = require("connect-flash");
     
-    //get all skateparks from db
-    Skatepark.find({}, (err, skateparks) => {
-        if(err){
-            console.log(err);
-        }
-        else{
-            res.render("index", {skateparks: skateparks})
-        }
-    });
+//Importing routes
+const   indexRoutes     = require("./routes/index"),
+        skateparkRoutes = require("./routes/skateparks"),
+        commentRoutes   = require("./routes/comments");
+
+//Connecting the database
+// mongoose.connect("mongodb://localhost:27017/skate_yelp", {useNewUrlParser: true});
+mongoose.connect("mongodb://localhost:27017/concrteDB", {useNewUrlParser: true});
+
+//Setting up body-parser
+app.use(bodyParser.urlencoded({ extended: true }));
+mongoose.set('useFindAndModify', false);
+
+//Use method-override
+app.use(methodOverride("_method"));
+
+//Setting the view engine to ejs
+app.set("view engine", "ejs");
+
+//Allowing for access to the stylesheet
+app.use(express.static(__dirname + "/public"));
+
+//Connect-flash
+app.use(flash());
+
+//SEEDING THE DATABASE - adding some preloaded skateparks for test purposes
+//seedDb();
+
+//PASSPORT CONFIGURATION
+app.use(require("express-session")({
+    secret: "qm6n-r2d2",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+app.use((req, res, next) => {
+    //Passing user information to every template as currentUser
+    res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    next();
 });
 
-//CREATE - Adds a new skatepark to the database, then redirects the post to the /skateparks GET route
-app.post("/skateparks", (req, res) => {
-    var name = req.body.name;
-    var image = req.body.image;
-    var description = req.body.description;
-    var newSkatepark = {"name": name, "image": image, "description": description};
-
-    //create new skatepark and save it to the database
-    Skatepark.create(newSkatepark, (err, skatepark) => {
-        if(err){
-            console.log(err);
-        }
-        else{
-            //redirect back to skateparks page
-            res.redirect("/skateparks");
-        }
-    });
-});
-
-//NEW - Displays the form to add a skatepark
-app.get("/skateparks/new", (req, res) => {
-    res.render("new");
-});
-
-//SHOW - Shows a description of the skatepark
-app.get("/skateparks/:id", (req, res) => {
-    //find the campground with provided id
-    Skatepark.findById(req.params.id, (err, foundSkatepark) => {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            res.render("show", {skatepark: foundSkatepark});
-        }
-    });
-});
+//Requiring routes
+app.use("/", indexRoutes);
+app.use("/skateparks", skateparkRoutes);
+app.use("/skateparks/:id/comments", commentRoutes);
 
 app.listen(8080, () => {
     console.log("Server is up an running!");

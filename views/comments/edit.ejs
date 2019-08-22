@@ -1,0 +1,24 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <div id="new-comment-container">
+            <h1 id="new-comment">Edit Comment</h1>
+
+            <form id="new-comment-form" method="POST" 
+            action="/skateparks/<%= skatepark_id %>/comments/<%= comment._id %>?_method=PUT" autocomplete="off">
+                <div class="form-group">
+                    <textarea class="form-control text-area" type="text" name="comment[text]" placeholder="Text"
+                        style="resize: none;"><%= comment.text %></textarea>
+                </div>
+                <div class="form-group">
+                    <button id="new-comment-btn" class="btn btn-primary">Enter</button>
+                </div>
+            </form>
+            <a href="/skateparks">Back to Skateparks</a>
+        </div>
+    </div>
+</div>
+
+
+<% include ../partials/footer %>

@@ -1,0 +1,26 @@
+<% include partials/header %>
+
+<div class="container">
+    <form class="auth-form" action="/register" method="POST" autocomplete="off">
+        <img id="cr-logo" src="/images/cr-icon.png" alt="conqrete logo">
+        <h3 class="form-title">Sign Up</h3>
+        <div class="row">
+            <div class="form-group col">
+                <input class="form-control" type="text" name="username" placeholder="Username" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col">
+                <input class="form-control" type="password" name="password" placeholder="Placeholder" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn form-btn">Sign Up</button>
+            </div>
+        </div>
+        <p><a id="login-link" href="/login">Log in here</a></p>
+    </form>
+</div>
+
+<% include partials/footer %>

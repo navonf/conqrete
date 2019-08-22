@@ -1,0 +1,108 @@
+RESTful Routing - a mapping between HTTP routes and CRUD
+
+CREATE
+READ
+UPDATE
+DESTROY
+
+name        url                 verb        desc.   
+============================================================
+INDEX    /skateparks            GET         Displays all the skateparks
+NEW      /skateparks/new        GET         Displays the form to add a skatepark
+CREATE   /skateparks            POST        Adds a new skatepark to the database, then redirects the post to the /skateparks GET route
+SHOW     /skateparks/:id        GET         Shows a description of the skatepark
+EDIT     /skateparks/:id/edit   GET         Show edit form
+UPDATE   /skateparks/:id        PUT         Update a skatepark, then redirect somewhere
+DESTROY  /skateparks/:id        DELETE      Delete a skatepark, then redirect somewhere
+
+
+#Initial routes
+* Add Landing Page
+* Add Campgrounds page that lists all Campgrounds
+--CHECK--
+
+#Each Campground has:
+* Name
+* Image
+--CHECK--
+
+#Layout and Basic Styling
+* Create our header and footer partials
+* Add in Bootstrap
+--CHECK--
+
+#Create New Skateparks
+* Setup new skatepark POST route 
+* Add in body-parser 
+* Setup route to show form (/skateparks/new)
+* Add basic unstyled form 
+--CHECK--
+
+#Style the skateparks page
+* Add a better Title
+* Make skateparks display in a grid
+--CHECK--
+
+#Add Mongoose
+* Install and configure Mongoose
+* Setup Skatepark model
+* Use Skatepark model inside of our routes
+--CHECK--
+
+#Show Page
+* Review the RESTful routes we've seen so far
+* Add desription to our skatepark model
+* Show db.collection.drop()
+* Add a show route/template
+--CHECK--
+
+#Refactor Mongoose Code
+* Create models directory
+* Use. module.exports
+* Require everything correctly
+--CHECK--
+
+#Add Seeds File
+* Add a seeds.js File
+* Run the seeds file everu time the server starts
+--CHECK--
+
+#Comment New/Create
+* Discuss nested routes
+* Add the comment new and create routes
+* Add the new comment form
+
+NEW     skateparks/:id/comments/new     GET
+CREATE  skateparks/:id/comments         POST
+
+--CHECK--
+
+#Style Show Page
+* Add sidebar to show page
+* Display comments nicely
+--CHECK--
+
+#Add User model
+* Install all packages needed for auth
+* Define User model
+--CHECK--
+
+#Auth pt.1
+* Add register, login, and sign out using passport-local
+
+#Auth pt.2 
+* Show/hide navbar links contingent of user login/logout
+--CHECK--
+
+#Refactor the routes
+* Use express router to reorganize all routes
+--CHECK--
+
+#Users + comments
+* Associtate users and comments
+* Save author's name to a comment automatically
+--CHECK--
+
+#Users and Skateparks
+* Prevent an unauthenticated user from creating a new skatepark
+* Save username+id to newly created skatepark

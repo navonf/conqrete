@@ -1,0 +1,38 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div id="new-park-container">
+        <form class="new-form" method="POST" action="/skateparks/<%= skatepark._id %>?_method=PUT" >
+            <h3 class="form-title">Edit <%= skatepark.name %></h3>
+            <div class="row">
+                <div class="form-group col">
+                    <input class="form-control" type="text" name="skatepark[name]" value="<%= skatepark.name %>">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <input class="form-control" type="number" name="skatepark[price]" min="0.00" step="0.01" value="<%= skatepark.price %>">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <input class="form-control" type="text" name="skatepark[image]" value="<%= skatepark.image %>">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <textarea class="form-control text-area" type="text" name="skatepark[description]"><%= skatepark.description %></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <button id="new-park-btn" class="btn form-btn">Enter</button>
+                </div>
+            </div>
+            <a href="/skateparks">Back to Skateparks</a>
+        </form>
+    </div>
+</div>
+
+
+<% include ../partials/footer %>

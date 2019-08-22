@@ -1,0 +1,35 @@
+<% include ../partials/header %>
+
+<div class="container">
+        <form class="new-form" action="/skateparks" method="POST" autocomplete="off">
+            <h3 class="form-title">Enter a new skate park</h3>
+            <div class="row">
+                <div class="form-group col">
+                    <input class="form-control" type="text" name="skatepark[name]" placeholder="Name of park">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <input class="form-control" type="number" name="skatepark[price]" placeholder="Price" min="0.00" step="0.01">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <input class="form-control" type="text" name="skatepark[image]" placeholder="Image URL of park">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <textarea class="form-control text-area" type="text" name="skatepark[description]" placeholder="Description"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <button class="btn form-btn">Enter</button>
+                </div>
+            </div>
+            <a href="/skateparks">Back to Skateparks</a>
+        </form>
+</div>
+
+<% include ../partials/footer %>
