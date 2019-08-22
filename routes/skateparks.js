@@ -6,31 +6,24 @@ const   express     = require("express"),
         
 //INDEX - Displays all the skateparks
 router.get("/", (req, res) => {
-    var perPage = 8;
-    var pageQuery = parseInt(req.query.page);
-    var pageNumber = pageQuery ? pageQuery : 1;
-    Skatepark.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allskateparks) {
-        Skatepark.count().exec(function (err, count) {
-            if (err) {
-                console.log(err);
-            } else {
-                res.render("skateparks/index", {
-                    skateparks: allskateparks,
-                    current: pageNumber,
-                    pages: Math.ceil(count / perPage)
-                });
-            }
-        });
+    //get all skateparks from db
+    Skatepark.find({}, (err, skateparks) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.render("skateparks/index", { skateparks: skateparks });
+        }
     });
 });
 
 //NEW - Displays the form to add a skatepark
-router.get("/new", middleware.isLoggedIn, (req, res) => {
+router.get("/new", (req, res) => {
     res.render("skateparks/new");
 });
 
 //CREATE - Adds a new skatepark to the database, then redirects the post to the /skateparks GET route
-router.post("/", middleware.isLoggedIn, (req, res) => {
+router.post("/",  (req, res) => {
     let skatepark = req.body.skatepark;
     skatepark.author = {
         id: req.user._id,
@@ -63,22 +56,26 @@ router.get("/:id", (req, res) => {
 });
 
 //EDIT - Renders skatepark edit form
-router.get("/:id/edit", middleware.checkPostOwnerShip, (req, res) => {
+router.get("/:id/edit", (req, res) => {
     //find the campground with provided id and populate the comments array onto the page
     Skatepark.findById(req.params.id).populate("comments").exec((err, foundSkatepark) => {
+        console.log(foundSkatepark);
         res.render("skateparks/edit", { skatepark: foundSkatepark });
     });
 });
 
 //UPDATE - Puts new information on the show page 
-router.put("/:id", middleware.checkPostOwnerShip, (req, res) => {
-    let id = req.params.id;
+router.put("/:id", (req, res) => {
+    var id = req.params.id;
     let skatepark = req.body.skatepark;
     //find and update the skatepark
-    Skatepark.findOneAndUpdate(id, skatepark, (err, updatedSkatepark) => {
+    console.log(req.params.id);
+    console.log(id);
+    Skatepark.findByIdAndUpdate(id, skatepark, (err, updatedSkatepark) => {
         if(err){
             res.redirect("/skateparks");
         } else {
+            console.log(updatedSkatepark._id);
             res.redirect("/skateparks/" + updatedSkatepark._id);
         }
     });
@@ -86,7 +83,7 @@ router.put("/:id", middleware.checkPostOwnerShip, (req, res) => {
 
 //DESTROY - Removes a skatepark on 
 router.delete("/:id", middleware.checkPostOwnerShip, (req, res) => {
-    Skatepark.findByIdAndRemove(req.params.id, (err, foundSkatepark) => {
+    Skatepark.findOneAndRemove(req.params.id, (err, foundSkatepark) => {
         if(err){
             res.redirect("/skateparks");
         } else {
