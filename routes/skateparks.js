@@ -14,17 +14,37 @@ const options = {
         
 const geocoder = NodeGeocoder(options);
 
+const escapeRegex = (text) => {
+    return text.replace(/[-[\]{}()*+?.,\\^$!#\s]/g, "\\$&");
+}
+
 //INDEX - Displays all the skateparks
 router.get("/", (req, res) => {
-    //get all skateparks from db
-    Skatepark.find({}, (err, skateparks) => {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            res.render("skateparks/index", { skateparks: skateparks });
-        }
-    });
+    let noMatch = null;
+    if (req.query.search) {
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        // Get all campgrounds from DB
+        Skatepark.find({ name: regex }, function (err, allSkateparks) {
+            if (err) {
+                console.log(err);
+            } else {
+                if (allSkateparks.length < 1) {
+                    noMatch = "No skateparks match that query, please try again.";
+                }
+                res.render("skateparks/index", { skateparks: allSkateparks, noMatch: noMatch });
+            }
+        });
+    } else {
+        //get all skateparks from db
+        Skatepark.find({}, (err, skateparks) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.render("skateparks/index", { skateparks: skateparks, noMatch: noMatch });
+            }
+        });
+    }
 });
 
 //NEW - Displays the form to add a skatepark

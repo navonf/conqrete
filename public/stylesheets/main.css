@@ -133,6 +133,7 @@ Jumbotron
         font-size: 30px;
     }
 } 
+
 /*
 Cards
 */
@@ -174,6 +175,19 @@ Cards
     opacity: 0.8;
 }
 
+#search {
+    transition: -webkit-box-shadow 0.3s ease, 
+                -moz-box-shadow 0.3s ease,
+                box-shadow 0.3s ease,
+                opacity 0.3s ease;
+}
+
+#search:hover {
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
+    opacity: 0.8;
+}
 
 .card-body {
     padding-bottom: 0;
@@ -240,6 +254,7 @@ button.btn.form-btn.btn-sm{
                 box-shadow 0.3s ease,
                 opacity 0.3s ease;
     width: 100%;
+    border: 1px solid #363636;
     margin-bottom: 1%;
 }
 
