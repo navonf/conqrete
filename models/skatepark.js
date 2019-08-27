@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 
 const skateparkSchema = new mongoose.Schema({
-    name: String,
-    price: String,
+    name: { type: String, unique: true, required: true },
     image: String,
-    description: String,
+    description: { type: String, required: true },
+    cost: Number,
+    location: String,
+    lat: Number,
+    lng: Number,
+    createdAt: {type: Date, default: Date.now},
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,

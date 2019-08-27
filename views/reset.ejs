@@ -1,0 +1,23 @@
+<% include partials/header %>
+
+<div class="container">
+    <div class="row">
+        <div class="auth-form">
+            <img id="cr-logo" src="/images/cr-icon.png" alt="conqrete logo">
+            <h5 class="text-center">Reset Password</h5>
+            <form action="/reset/<%= token %>" method="POST" autocomplete="off">
+                <div class="form-group">
+                    <label for="password">New Password</label>
+                    <input class="form-control" type="password" name="password" placeholder="New Password">
+                </div>
+                <div class="form-group">
+                    <label for="confirm">Confirm Passowrd</label>
+                    <input class="form-control" type="password" name="confirm" placeholder="Confirm Password">
+                </div>
+                <button class="btn form-btn btn-block">Update Passowrd</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<% include partials/footer %>

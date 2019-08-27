@@ -18,10 +18,10 @@ DESTROY  /skateparks/:id        DELETE      Delete a skatepark, then redirect so
 
 #Initial routes
 * Add Landing Page
-* Add Campgrounds page that lists all Campgrounds
+* Add Skatepark page that lists all Skateparks
 --CHECK--
 
-#Each Campground has:
+#Each Skatepark has:
 * Name
 * Image
 --CHECK--

@@ -1,0 +1,20 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="d-flex flex-column mb-3">
+        <div class="p-2 ">
+            <img id="profile-img" src="<%= user.avatar %>" alt="user profile image">
+            <h3 class="text-center"><%= user.username%></h3>
+        </div>
+        <div class="p-2">
+            <h5>Contributions</h5>
+        </div>
+        <div class="p-2">
+            <% skateparks.forEach((skatepark) => { %>
+                <li id="contribution-link"><a href="/skateparks/<%= skatepark.id %>"><%= skatepark.name %></a></li>
+            <% }); %>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>

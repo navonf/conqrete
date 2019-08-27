@@ -4,21 +4,20 @@
     <div class="row">
 
         <div class="col-md-9">
-
             <div class="card">
                 <img class="card-img-top img-fluid" src="<%= skatepark.image %>" alt="<%= skatepark.name %>">
                 <div class="card-body">
-                    <% if(skatepark.price == 0.00) { %>
+                    <% if(skatepark.cost === 0) { %>
                         <h4 class="card-title"><%= skatepark.name %><span id="price">Free</span></h4>
                     <% } else { %>
-                        <h4 class="card-title"><%= skatepark.name %><span id="price">Cost $<%= skatepark.price %>/day</span></h4>
+                        <h4 class="card-title"><%= skatepark.name %><span id="price">Cost $<%= skatepark.cost %>/day</span></h4>
                     <% } %>
                     <p class="card-text d-block"><%= skatepark.description %></p>
                     <p class="card-text d-block">
-                        <em>Submitted by <%= skatepark.author.username %></em>
+                        <em>Submitted by <a href="/users/<%= skatepark.author.id %>"><%= skatepark.author.username %></a>, <%= moment(skatepark.createdAt).fromNow() %> </em>
                     </p>
                     <% if(currentUser && skatepark.author.id.equals(currentUser._id)) { %>
-                        <a class="btn edit-btn btn-sm" href="/skateparks/<%= skatepark._id %>/edit">Edit</a>
+                        <a class="btn form-btn btn-sm" href="/skateparks/<%= skatepark._id %>/edit">Edit</a>
                         <form class="delete-btn-formelete-btn-form" action="/skateparks/<%= skatepark._id %>?_method=DELETE" method="POST">
                             <button class="btn delete-btn btn-sm">Delete</button>
                         </form>
@@ -30,16 +29,15 @@
                 <div class="card-body">
                     <p><a id="comment-btn" class="btn btn-dark btn-sm" href="/skateparks/<%= skatepark._id %>/comments/new">Add New Comment</a></p>
                 </div>
-
                 <% skatepark.comments.forEach((comment) => { %>
                     <div id="comment" class="row">
                         <div class="col-md-12">
                             <hr>
                             <strong><%= comment.author.username %></strong>
-                            <span id="comment-date">10 days ago</span>
+                            <span id="comment-date"><%= moment(skatepark.createdAt).fromNow() %></span>
                             <p><%= comment.text %></p>
                             <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
-                                <a class="btn edit-btn btn-sm" 
+                                <a class="btn form-btn btn-sm" 
                                 href="/skateparks/<%= skatepark._id %>/comments/<%= comment._id %>/edit">
                                 edit
                                 </a>
@@ -50,9 +48,7 @@
                         </div>
                     </div>
                 <% }); %>
-
             </div>
-
         </div>
 
         <div class="col-md-3">
@@ -62,9 +58,40 @@
                 <li class="list-group-item">info 2</li>
                 <li class="list-group-item">info 3</li>
             </div>
+            <div id="map"></div>
         </div>
-
     </div>
+
+
+    <script>
+        function initMap() {
+            const lat = <%= skatepark.lat %>;
+            const lng = <%= skatepark.lng %>;
+            const center = { lat: lat, lng: lng };
+            const map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: center,
+                scrollwheel: true
+            });
+            let contentString = `
+          <strong><%= skatepark.name %><br />
+          <%= skatepark.location %></strong>
+          <p><%= skatepark.description %></p>
+        `
+            const infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+            const marker = new google.maps.Marker({
+                position: center,
+                map: map
+            });
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9oUopID5Bpuw3KpboSPmVuSUVLthMU1g&callback=initMap"></script>
+
 </div>
 
 <% include ../partials/footer %>

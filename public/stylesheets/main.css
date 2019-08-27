@@ -1,23 +1,23 @@
 @import url('https://fonts.googleapis.com/css?family=Signika&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Overpass&display=swap');
-
 /*
 ALERTS
 */
 
-.alert{
+.alert {
     border: none;
     border-radius: 0px;
+    margin: 0 0;
 }
 
-.alert.alert-danger{
-    background-color: rgba(255, 71, 87, 0.6);
+.alert.alert-danger {
+    background-color: rgba(255, 71, 87);
     color: #ffffff;
     font-weight: 500;
 }
 
-.alert.alert-success{
-    background-color: rgba(29, 209, 161, 0.6);
+.alert.alert-success {
+    background-color: rgba(29, 209, 161);
     color: #ffffff;
     font-weight: 500;
 }
@@ -25,37 +25,40 @@ ALERTS
 /*
 Navbar
 */
-button.navbar-toggler{
+
+
+button.navbar-toggler {
     border: none;
 }
+
 .btn {
     border-radius: 0px;
 }
 
-nav.navbar a.nav-item.nav-link{
+nav.navbar a.nav-item.nav-link {
     color: #363636;
     font-weight: 500;
 }
 
-nav.navbar a.nav-item.nav-link:hover{
+nav.navbar a.nav-item.nav-link:hover {
     opacity: 0.5;
 }
 
 #btn-signup {
-    transition: background-color 0.5s ease, 
-                color 0.5s ease;
+    transition: background-color 0.3s ease, 
+             color 0.3s ease, 
+            border 0.3s ease;
     background-color: #363636;
     color: #ffffff;
     font-weight: 500;
-
+    border: 1px solid #363636;
 }
 
 #btn-signup:hover {
-    transition: background-color 0.3s ease, 
-                color 0.3s ease;
     background-color: #ffffff;
     color: #363636;
-    opacity: 0.5;
+    border: 1px solid #363636;
+    opacity: 1.0;
 }
 
 /*
@@ -66,13 +69,12 @@ Jumbotron
     min-height: 50vh;
     text-align: center;
     font-family: 'Signika', sans-serif;
-    background-color: #ffffff;
-    border-bottom: 0.5px solid rgb(0, 0, 0, 0.5);
-    border-radius: 0;
+    background-color: #fff;
+    border-radius: 0px;
+    border-bottom: 1px solid rgba(47, 54, 64, 0.2);
 }
 
 .vertical-center {
- 
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -104,60 +106,68 @@ Jumbotron
 }
 
 #add-skatepark-btn {
-    color: #363636;
-    border: 1px solid #363636;
-    background-color: #ffffff;
-}
-
-#add-skatepark-btn:hover {
-      transition: -webkit-box-shadow 0.3s ease, 
+    transition: -webkit-box-shadow 0.3s ease, 
                 -moz-box-shadow 0.3s ease,
                 box-shadow 0.3s ease,
                 opacity 0.3s ease;
+    background-color: #1e90ff;
+    border: 1px solid #1e90ff;
+    color: #fff;
+}
+
+#add-skatepark-btn:hover {
     -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     opacity: 0.8;
 }
 
+@media only screen and (max-width: 760px) {
+    h1#welcome{
+        font-size: 60px;
+    }
+} 
+
+@media only screen and (max-width: 480px) {
+    h1#welcome{
+        font-size: 30px;
+    }
+} 
 /*
 Cards
 */
 
 .card {
+    margin-bottom: 5%;
+    padding-bottom: 2%;
     border-radius: 0;
+    border: 1px solid rgba(47, 54, 64, 0.5);
 }
 
 .card-img-top {
     border-radius: 0;
+    border-bottom: 1px solid rgba(47, 54, 64, 0.5);
 }
 
 #skatepark-card {
     font-weight: 700;
     font-family: 'Overpass', sans-serif;
-}
-
-#skatepark-card:hover {
-    transition: -webkit-box-shadow 0.3s ease, 
-                -moz-box-shadow 0.3s ease,
-                box-shadow 0.3s ease,
-                opacity 0.3s ease;
     -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
 }
 
 #more-info-btn {
-    color: #363636;
-    border: 1px solid #363636;
-    background-color: #ffffff;
-}
-
-#more-info-btn:hover {
     transition: -webkit-box-shadow 0.3s ease, 
                 -moz-box-shadow 0.3s ease,
                 box-shadow 0.3s ease,
                 opacity 0.3s ease;
+    background-color: #1e90ff;
+    border: 1px solid #1e90ff;
+    color: #fff;
+}
+
+#more-info-btn:hover {
     -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
@@ -170,18 +180,27 @@ Cards
 }
 
 /*
+MAP
+*/
+
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+/*
 NEW PAGE in /comments
 */
 
-.text-area{
+.text-area {
     resize: none;
 }
+
 /*
 NEW PAGE in /skateparks
 */
 
-
-#cr-logo{
+#cr-logo {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -205,6 +224,10 @@ NEW PAGE in /skateparks
 
 
 .form-btn {
+    transition: -webkit-box-shadow 0.3s ease, 
+                -moz-box-shadow 0.3s ease,
+                box-shadow 0.3s ease,
+                opacity 0.3s ease;
     width: 100%;
     color: #363636;
     border: 1px solid #363636;
@@ -212,10 +235,6 @@ NEW PAGE in /skateparks
 }
 
 .form-btn:hover {
- transition: -webkit-box-shadow 0.3s ease, 
-                -moz-box-shadow 0.3s ease,
-                box-shadow 0.3s ease,
-                opacity 0.3s ease;
     -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
@@ -226,39 +245,34 @@ NEW PAGE in /skateparks
 SHOW PAGE in /skateparks
 */
 
-.list-group{
+.list-group {
     margin-bottom: 5%;
 }
 
-.card{
-    margin-bottom: 5%;
-    padding-bottom: 2%;
-}
-
-#price{
+#price {
     float: right;
 }
 
-#comment-btn{
-    float: right;
-}
-
-#comment-btn:hover{
+#comment-btn {
     transition: -webkit-box-shadow 0.3s ease, 
                 -moz-box-shadow 0.3s ease,
                 box-shadow 0.3s ease,
                 opacity 0.3s ease;
+    float: right;
+}
+
+#comment-btn:hover {
     -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     opacity: 0.8;
 }
 
-#comment{
+#comment {
     margin: 0.5%;
 }
 
-#comment-date{
+#comment-date {
     float: right;
 }
 
@@ -267,6 +281,10 @@ SHOW PAGE in /skateparks
 }
 
 .delete-btn {
+    transition: -webkit-box-shadow 0.3s ease, 
+                -moz-box-shadow 0.3s ease,
+                box-shadow 0.3s ease,
+                opacity 0.3s ease;
     float: right;
     color: #363636;
     border: 1px solid #363636;
@@ -274,10 +292,6 @@ SHOW PAGE in /skateparks
 }
 
 .delete-btn:hover {
-    transition: -webkit-box-shadow 0.3s ease, 
-                -moz-box-shadow 0.3s ease,
-                box-shadow 0.3s ease,
-                opacity 0.3s ease;
     -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
@@ -285,6 +299,10 @@ SHOW PAGE in /skateparks
 }
 
 .edit-btn {
+    transition: -webkit-box-shadow 0.3s ease, 
+                -moz-box-shadow 0.3s ease,
+                box-shadow 0.3s ease,
+                opacity 0.3s ease;
     float: right;
     color: #363636;
     border: 1px solid #363636;
@@ -293,10 +311,6 @@ SHOW PAGE in /skateparks
 }
 
 .edit-btn:hover {
-    transition: -webkit-box-shadow 0.3s ease, 
-                -moz-box-shadow 0.3s ease,
-                box-shadow 0.3s ease,
-                opacity 0.3s ease;
     -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
@@ -308,24 +322,46 @@ SHOW PAGE in /skateparks
 SIGNUP, LOG IN
 */
 
-#cr-logo{
+#cr-logo {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
-.auth-form{
-    margin: auto;
-    margin-top: 15%;
+.auth-form {
+    margin: 15% auto;
     width: 350px;
 }
 
-.form-control{
+.form-control {
     border: 1px #363636 solid;
     border-radius: 0;
 }
 
 
-a{
+a {
     text-decoration: none !important;
+}
+
+/*
+USER PROFILE
+*/
+
+#profile-img{
+    height: 150px;
+    width: 150px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #000;
+    border-radius: 100px;
+    margin-top: 10%;
+    margin-bottom: 1%; 
+    -webkit-box-shadow: 10px 10px 30px -24px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 30px -24px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 30px -24px rgba(0,0,0,0.75);
+}
+
+#contribution-link{
+    list-style-type: none;
 }

@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const   express         = require("express"),
         app             = express(),
         bodyParser      = require("body-parser"),
@@ -18,7 +20,7 @@ const   indexRoutes     = require("./routes/index"),
 
 //Connecting the database
 // mongoose.connect("mongodb://localhost:27017/skate_yelp", {useNewUrlParser: true});
-mongoose.connect("mongodb://localhost:27017/concrteDB", {useNewUrlParser: true});
+mongoose.connect("mongodb://localhost:27017/conqreteDB", {useNewUrlParser: true});
 
 //Setting up body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,6 +34,9 @@ app.set("view engine", "ejs");
 
 //Allowing for access to the stylesheet
 app.use(express.static(__dirname + "/public"));
+
+//Moment JS sllows for post timestamps - used on comments and new parks
+app.locals.moment = require('moment');
 
 //Connect-flash
 app.use(flash());
@@ -65,6 +70,6 @@ app.use("/", indexRoutes);
 app.use("/skateparks", skateparkRoutes);
 app.use("/skateparks/:id/comments", commentRoutes);
 
-app.listen(8080, () => {
+app.listen(3000, () => {
     console.log("Server is up an running!");
 });

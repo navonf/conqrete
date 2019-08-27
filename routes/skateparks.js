@@ -1,26 +1,29 @@
-const   express     = require("express"),
-        router      = express.Router(),
-        Skatepark   = require("../models/skatepark"),
-        Comment     = require("../models/comment"),
-        middleware  = require("../middleware");
+const   express         = require("express"),
+        router          = express.Router(),
+        Skatepark       = require("../models/skatepark"),
+        Comment         = require("../models/comment"),
+        middleware      = require("../middleware"),
+        NodeGeocoder    = require("node-geocoder");
+
+const options = {
+    provider: "google",
+    httpAdapter: "https",
+    apiKey: process.env.GEOCODER_API_KEY,
+    formatter: null
+}
         
+const geocoder = NodeGeocoder(options);
+
 //INDEX - Displays all the skateparks
 router.get("/", (req, res) => {
-    var perPage = 8;
-    var pageQuery = parseInt(req.query.page);
-    var pageNumber = pageQuery ? pageQuery : 1;
-    Skatepark.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allskateparks) {
-        Skatepark.count().exec(function (err, count) {
-            if (err) {
-                console.log(err);
-            } else {
-                res.render("skateparks/index", {
-                    skateparks: allskateparks,
-                    current: pageNumber,
-                    pages: Math.ceil(count / perPage)
-                });
-            }
-        });
+    //get all skateparks from db
+    Skatepark.find({}, (err, skateparks) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.render("skateparks/index", { skateparks: skateparks });
+        }
     });
 });
 
@@ -35,22 +38,32 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
     skatepark.author = {
         id: req.user._id,
         username: req.user.username
-    };    
-    //create new skatepark and save it to the database
-    Skatepark.create(skatepark, (err, skatepark) => {
-        if (err) {
-            console.log(err);
+    };  
+    geocoder.geocode(req.body.skatepark.location, (err, data) => {
+        if (err || !data.length) {
+            req.flash("error", "Invalid adress");
+            return res.redirect("back");
         }
-        else {
-            //redirect back to skateparks page
-            res.redirect("/skateparks");
-        }
+        skatepark.lat = data[0].latitude;
+        skatepark.lng = data[0].longitude;
+        skatepark.location = data[0].formattedAddress;
+        //create new skatepark and save it to the database
+        Skatepark.create(skatepark, (err, newSkatepark) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                //redirect back to skateparks page
+                console.log(newSkatepark);
+                res.redirect("/skateparks");
+            }
+        });
     });
 });
 
 //SHOW - Shows a description of the skatepark
 router.get("/:id", (req, res) => {
-    //find the campground with provided id and populate the comments array onto the page
+    //find the skatepark with provided id and populate the comments array onto the page
     Skatepark.findById(req.params.id).populate("comments").exec((err, foundSkatepark) => { 
         //Find the skatepark and find all the posts for that user
         if (err) {
@@ -64,7 +77,7 @@ router.get("/:id", (req, res) => {
 
 //EDIT - Renders skatepark edit form
 router.get("/:id/edit", middleware.checkPostOwnerShip, (req, res) => {
-    //find the campground with provided id and populate the comments array onto the page
+    //find the skatepark with provided id and populate the comments array onto the page
     Skatepark.findById(req.params.id).populate("comments").exec((err, foundSkatepark) => {
         res.render("skateparks/edit", { skatepark: foundSkatepark });
     });
@@ -74,13 +87,24 @@ router.get("/:id/edit", middleware.checkPostOwnerShip, (req, res) => {
 router.put("/:id", middleware.checkPostOwnerShip, (req, res) => {
     let id = req.params.id;
     let skatepark = req.body.skatepark;
-    //find and update the skatepark
-    Skatepark.findOneAndUpdate(id, skatepark, (err, updatedSkatepark) => {
-        if(err){
-            res.redirect("/skateparks");
-        } else {
-            res.redirect("/skateparks/" + updatedSkatepark._id);
+    geocoder.geocode(req.body.skatepark.location, (err, data) => {
+        if (err || !data.length) {
+            req.flash("error", "Invalid adress");
+            return res.redirect("back");
         }
+        skatepark.lat = data[0].latitude;
+        skatepark.lng = data[0].longitude;
+        skatepark.location = data[0].formattedAddress;
+        //find and update the skatepark
+        Skatepark.findByIdAndUpdate(id, skatepark, (err, updatedSkatepark) => {
+            if (err) {
+                req.flash("error", err.message);
+                res.redirect("/skateparks");
+            } else {
+                req.flash("success", "Successfully Updated!");
+                res.redirect("/skateparks/" + updatedSkatepark._id);
+            }
+        });
     });
 });
 

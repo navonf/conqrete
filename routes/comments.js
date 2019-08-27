@@ -43,7 +43,6 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 });
 
 //EDIT - Renders form to edit a comment
-
 router.get("/:comment_id/edit", middleware.checkCommentOwnerShip, (req, res) => {
     Comment.findById(req.params.comment_id, (err, foundComment) => {
         if(err){
@@ -56,7 +55,6 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnerShip, (req, res) => 
 });
 
 //UPDATE - Puts a new comment where the original was
-
 router.put("/:comment_id", middleware.checkCommentOwnerShip, (req, res) => {
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, foundComment) => {
         if(err){
@@ -68,7 +66,6 @@ router.put("/:comment_id", middleware.checkCommentOwnerShip, (req, res) => {
 });
 
 //DELETE - Removes a comment
-
 router.delete("/:comment_id", middleware.checkCommentOwnerShip, (req, res) => {
     Comment.findByIdAndRemove(req.params.comment_id, (err, foundSkatepark) => {
         if (err) {
