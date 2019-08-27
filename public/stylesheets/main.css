@@ -222,6 +222,17 @@ NEW PAGE in /skateparks
   }
 } 
 
+a.btn.form-btn.btn-sm {
+    background-color: #f0932b;
+    color: #fff;
+    font-weight: 600;
+}
+
+button.btn.form-btn.btn-sm{
+    background-color: #ff4757;
+    color: #fff;
+    font-weight: 600;
+}
 
 .form-btn {
     transition: -webkit-box-shadow 0.3s ease, 
@@ -229,9 +240,7 @@ NEW PAGE in /skateparks
                 box-shadow 0.3s ease,
                 opacity 0.3s ease;
     width: 100%;
-    color: #363636;
-    border: 1px solid #363636;
-    background-color: #ffffff;
+    margin-bottom: 1%;
 }
 
 .form-btn:hover {
@@ -240,6 +249,7 @@ NEW PAGE in /skateparks
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
     opacity: 0.8;
 }
+
 
 /*
 SHOW PAGE in /skateparks

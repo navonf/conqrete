@@ -18,8 +18,8 @@
                     </p>
                     <% if(currentUser && skatepark.author.id.equals(currentUser._id)) { %>
                         <a class="btn form-btn btn-sm" href="/skateparks/<%= skatepark._id %>/edit">Edit</a>
-                        <form class="delete-btn-formelete-btn-form" action="/skateparks/<%= skatepark._id %>?_method=DELETE" method="POST">
-                            <button class="btn delete-btn btn-sm">Delete</button>
+                        <form action="/skateparks/<%= skatepark._id %>?_method=DELETE" method="POST">
+                            <button class="btn form-btn btn-sm">Delete</button>
                         </form>
                     <% } %>
                 </div>
@@ -37,12 +37,12 @@
                             <span id="comment-date"><%= moment(skatepark.createdAt).fromNow() %></span>
                             <p><%= comment.text %></p>
                             <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
-                                <a class="btn form-btn btn-sm" 
+                                <a class="btn form-btn edit btn-sm" 
                                 href="/skateparks/<%= skatepark._id %>/comments/<%= comment._id %>/edit">
                                 edit
                                 </a>
                                 <form class="delete-btn-form" action="/skateparks/<%= skatepark._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-                                    <button class="btn delete-btn btn-sm">Delete</button>
+                                    <button class="btn delete-btn btn-sm delete">Delete</button>
                                 </form>
                             <% } %>
                         </div>

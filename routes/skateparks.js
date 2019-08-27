@@ -28,12 +28,12 @@ router.get("/", (req, res) => {
 });
 
 //NEW - Displays the form to add a skatepark
-router.get("/new", (req, res) => {
+router.get("/new", middleware.isLoggedIn, (req, res) => {
     res.render("skateparks/new");
 });
 
 //CREATE - Adds a new skatepark to the database, then redirects the post to the /skateparks GET route
-router.post("/",  (req, res) => {
+router.post("/", middleware.isLoggedIn, (req, res) => {
     let skatepark = req.body.skatepark;
     skatepark.author = {
         id: req.user._id,
@@ -54,7 +54,6 @@ router.post("/",  (req, res) => {
             }
             else {
                 //redirect back to skateparks page
-                console.log(newSkatepark);
                 res.redirect("/skateparks");
             }
         });
@@ -85,7 +84,7 @@ router.get("/:id/edit", middleware.checkPostOwnerShip, (req, res) => {
 });
 
 //UPDATE - Puts new information on the show page 
-router.put("/:id", (req, res) => {
+router.put("/:id", middleware.checkPostOwnerShip, (req, res) => {
     var id = req.params.id;
     let skatepark = req.body.skatepark;
     geocoder.geocode(req.body.skatepark.location, (err, data) => {
