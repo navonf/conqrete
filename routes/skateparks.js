@@ -28,12 +28,12 @@ router.get("/", (req, res) => {
 });
 
 //NEW - Displays the form to add a skatepark
-router.get("/new", middleware.isLoggedIn, (req, res) => {
+router.get("/new", (req, res) => {
     res.render("skateparks/new");
 });
 
 //CREATE - Adds a new skatepark to the database, then redirects the post to the /skateparks GET route
-router.post("/", middleware.isLoggedIn, (req, res) => {
+router.post("/",  (req, res) => {
     let skatepark = req.body.skatepark;
     skatepark.author = {
         id: req.user._id,
@@ -79,13 +79,14 @@ router.get("/:id", (req, res) => {
 router.get("/:id/edit", middleware.checkPostOwnerShip, (req, res) => {
     //find the skatepark with provided id and populate the comments array onto the page
     Skatepark.findById(req.params.id).populate("comments").exec((err, foundSkatepark) => {
+        console.log(foundSkatepark);
         res.render("skateparks/edit", { skatepark: foundSkatepark });
     });
 });
 
 //UPDATE - Puts new information on the show page 
-router.put("/:id", middleware.checkPostOwnerShip, (req, res) => {
-    let id = req.params.id;
+router.put("/:id", (req, res) => {
+    var id = req.params.id;
     let skatepark = req.body.skatepark;
     geocoder.geocode(req.body.skatepark.location, (err, data) => {
         if (err || !data.length) {
@@ -110,7 +111,7 @@ router.put("/:id", middleware.checkPostOwnerShip, (req, res) => {
 
 //DESTROY - Removes a skatepark on 
 router.delete("/:id", middleware.checkPostOwnerShip, (req, res) => {
-    Skatepark.findByIdAndRemove(req.params.id, (err, foundSkatepark) => {
+    Skatepark.findOneAndRemove(req.params.id, (err, foundSkatepark) => {
         if(err){
             res.redirect("/skateparks");
         } else {
