@@ -61,7 +61,7 @@ router.get("/", (req, res) => {
     } else {
         //get all skateparks from db
         Skatepark.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec( (err, allskateparks) => {
-            Skatepark.estimatedDocumentCount()().exec(function (err, count) {
+            Skatepark.countDocuments().exec(function (err, count) {
                 if (err) {
                     console.log(err);
                 } else {
