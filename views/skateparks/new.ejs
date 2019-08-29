@@ -4,21 +4,25 @@
     <div class="row">
         <div class="auth-form">
             <h3 class="text-center">Enter a new skatepark</h3>
-            <form  action="/skateparks" method="POST" autocomplete="off">
+            <form  action="/skateparks" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="skatepark[name]" placeholder="Name of park">
+                    <label for="skatepark[name]">Skatepark name</label>
+                    <input class="form-control" type="text" name="skatepark[name]" placeholder="Name of park" autofocus>
                 </div>
                 <div class="form-group">
+                    <label for="skatepark[cost]">Price it costs to skate</label>
                     <input class="form-control" type="number" name="skatepark[cost]" placeholder="Price" min="0.00" step="0.01">
                 </div>
                 <div class="form-group">
-                    <label for="location">Location</label>
+                    <label for="skatepark[location]">Location</label>
                     <input class="form-control" type="text" name="skatepark[location]" id="location" placeholder="Los Angeles, CA">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="skatepark[image]" placeholder="Image URL of park">
+                    <label for="skatepark[image]">Image of skatepark</label>
+                    <input class="form-control" type="file" name="skatepark[image]" accept="image/*" required>
                 </div>
                 <div class="form-group">
+                    <label for="skatepark[description]">Skatepark description</label>
                     <textarea class="form-control text-area" type="text" name="skatepark[description]"
                         placeholder="Description"></textarea>
                 </div>

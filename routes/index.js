@@ -4,9 +4,31 @@ const   express     = require("express"),
         User        = require("../models/user"),
         Skatepark   = require("../models/skatepark"),
         async       = require("async"),
-        nodemailer  = require("nodemailer");
+        nodemailer  = require("nodemailer"),
+        multer      = require("multer"),
+        cloudinary  = require("cloudinary");
 
 let     crypto      = require("crypto");
+
+const storage = multer.diskStorage({ //storage variable takes files
+    filename: (req, file, callback) => {
+        callback(null, Date.now() + file.originalname);
+    }
+});
+const imageFilter = (req, file, cb) => { //file or image filter accepts certain file types
+    // accept image files only
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+const upload = multer({ storage: storage, fileFilter: imageFilter }); //config items as key:value pairs
+
+cloudinary.config({ //cloud based file storage for web apps
+    cloud_name: 'doly38kxv',
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 
 //HOME - renders the home template
@@ -20,25 +42,40 @@ router.get("/register", (req, res) => {
 });
 
 //REGISTER ROUTE - registers the new user with passport
-router.post("/register", (req, res) => {
-    var newUser = new User({
-        username: req.body.username,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        avatar: req.body.avatar
-    });
-
-    var password = req.body.password;
-    console.log(newUser);
-    User.register(newUser, password, (err, user) => {
+router.post("/register", upload.single("image"), (req, res) => {
+    cloudinary.v2.uploader.upload(req.file.path, (err, result) => {
         if (err) {
-            req.flash("error", err.message);
-            return res.render("register");
+            req.flash('error', err.message);
+            return res.redirect('back');
         }
-        passport.authenticate("local")(req, res, () => {
-            req.flash("success", "Successfully signed up")
-            res.redirect("/skateparks");
+
+        // add cloudinary url for the image to the skatepark object under image property
+        let image = req.body.image;
+        image = result.secure_url;
+        // add image's public_id to skatepark object
+        let imageId = req.body.imageId; 
+        imageId = result.public_id;
+
+        const newUser = new User({
+            username: req.body.username,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            image: image,
+            imageId: imageId
+        });
+
+        const password = req.body.password;
+        console.log(newUser);
+        User.register(newUser, password, (err, user) => {
+            if (err) {
+                req.flash("error", err.message);
+                return res.render("register");
+            }
+            passport.authenticate("local")(req, res, () => {
+                req.flash("success", "Successfully signed up")
+                res.redirect("/skateparks");
+            });
         });
     });
 });

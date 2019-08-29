@@ -27,8 +27,9 @@ Navbar
 */
 
 
-button.navbar-toggler {
-    border: none;
+
+span.navbar-toggler-icon {
+    color: #363636;
 }
 
 .btn {
@@ -111,7 +112,7 @@ Jumbotron
                 box-shadow 0.3s ease,
                 opacity 0.3s ease;
     background-color: #1e90ff;
-    border: 1px solid #1e90ff;
+    border: 1px solid #000;
     color: #fff;
 }
 
@@ -164,7 +165,7 @@ Cards
                 box-shadow 0.3s ease,
                 opacity 0.3s ease;
     background-color: #1e90ff;
-    border: 1px solid #1e90ff;
+    border: 1px solid #000;
     color: #fff;
 }
 
@@ -180,6 +181,7 @@ Cards
                 -moz-box-shadow 0.3s ease,
                 box-shadow 0.3s ease,
                 opacity 0.3s ease;
+    border: 1px solid #000;
 }
 
 #search:hover {
@@ -238,6 +240,18 @@ NEW PAGE in /skateparks
 
 a.btn.form-btn.btn-sm {
     background-color: #f0932b;
+    color: #fff;
+    font-weight: 600;
+}
+
+a.btn.edit-btn.btn-sm {
+    background-color: #f0932b;
+    color: #fff;
+    font-weight: 600;
+}
+
+button.btn.delete-btn.btn-sm {
+    background-color: #ff4757;
     color: #fff;
     font-weight: 600;
 }
@@ -354,7 +368,7 @@ SIGNUP, LOG IN
 }
 
 .auth-form {
-    margin: 15% auto;
+    margin: 5% auto;
     width: 350px;
 }
 
@@ -372,19 +386,10 @@ a {
 USER PROFILE
 */
 
-#profile-img{
-    height: 150px;
-    width: 150px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid #000;
-    border-radius: 100px;
-    margin-top: 10%;
-    margin-bottom: 1%; 
-    -webkit-box-shadow: 10px 10px 30px -24px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 30px -24px rgba(0,0,0,0.75);
-    box-shadow: 10px 10px 30px -24px rgba(0,0,0,0.75);
+#profile-card{
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.14);
 }
 
 #contribution-link{

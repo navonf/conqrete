@@ -21,6 +21,8 @@ const   indexRoutes     = require("./routes/index"),
 //Connecting the database
 // mongoose.connect("mongodb://localhost:27017/skate_yelp", {useNewUrlParser: true});
 mongoose.connect("mongodb://localhost:27017/conqreteDB", {useNewUrlParser: true});
+mongoose.set('useCreateIndex', true)
+
 
 //Setting up body-parser
 app.use(bodyParser.urlencoded({ extended: true }));

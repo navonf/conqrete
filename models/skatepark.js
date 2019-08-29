@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const skateparkSchema = new mongoose.Schema({
     name: { type: String, unique: true, required: true },
     image: String,
+    imageId: String,
     description: { type: String, required: true },
     cost: Number,
     location: String,

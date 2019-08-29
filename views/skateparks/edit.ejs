@@ -4,22 +4,27 @@
     <div class="row">
         <div class="auth-form">
             <h3 class="form-title">Edit <%= skatepark.name %></h3>
-            <form class="new-form" method="POST" action="/skateparks/<%= skatepark._id %>?_method=PUT">
+            <form method="POST" action="/skateparks/<%= skatepark._id %>?_method=PUT" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="skatepark[name]" value="<%= skatepark.name %>">
+                    <label for="skatepark[name]">Skatepark name</label>
+                    <input class="form-control" type="text" name="skatepark[name]" value="<%= skatepark.name %>" autofocus>
                 </div>
                 <div class="form-group">
+                    <label for="skatepark[cost]">Price it costs to skate</label>
                     <input class="form-control" type="number" name="skatepark[cost]" min="0.00" step="0.01"
                         value="<%= skatepark.cost %>">
                 </div>
                 <div class="form-group">
-                    <label for="location">Location</label>
-                    <input class="form-control" type="text" name="skatepark[location]" id="location" value="<%= skatepark.location %>">
+                    <label for="skatepark[location]">Location</label>
+                    <input class="form-control" type="text" name="skatepark[location]" id="location"
+                        value="<%= skatepark.location %>">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="skatepark[image]" value="<%= skatepark.image %>">
+                    <label for="skatepark[image]">Image of skatepark</label>
+                    <input class="form-control" type="file" name="skatepark[image]" accept="image/*" required>
                 </div>
                 <div class="form-group">
+                    <label for="skatepark[description]">Skatepark description</label>
                     <textarea class="form-control text-area" type="text"
                         name="skatepark[description]"><%= skatepark.description %></textarea>
                 </div>

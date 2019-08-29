@@ -5,24 +5,30 @@
         <div class="auth-form">
             <img id="cr-logo" src="/images/cr-icon.png" alt="conqrete logo">
             <h3 class="text-center">Sign Up</h3>
-            <form action="/register" method="POST" autocomplete="off">
+            <form action="/register" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="username" placeholder="Username" >
+                    <label for="text">Username</label>
+                    <input class="form-control" type="text" name="username" placeholder="Username" autofocus>
                 </div>
                 <div class="form-group">
+                    <label for="password">Password</label>
                     <input class="form-control" type="password" name="password" placeholder="Password" >
                 </div>
                 <div class="form-group">
+                    <label for="firstName">First Name</label>
                     <input class="form-control" type="text" name="firstName" placeholder="First Name">
                 </div>
                 <div class="form-group">
+                    <label for="lastName">Last Name</label>
                     <input class="form-control" type="text" name="lastName" placeholder="Last Name">
                 </div>
                 <div class="form-group">
+                    <label for="email">Email Address</label>
                     <input class="form-control" type="email" name="email" placeholder="example@example.com">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="avatar" placeholder="image url">
+                    <label for="image">Profile Image</label>
+                    <input class="form-control" type="file" name="image" accept="image/*" required>
                 </div>
                 <button class="btn form-btn">Sign Up</button>
             </form>

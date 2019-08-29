@@ -1,6 +1,6 @@
 <% include ../partials/header %>
 
-<div class="container">
+<div class="container" style="margin-top: 20px;">
     <div class="row">
 
         <div class="col-md-9">
@@ -37,7 +37,7 @@
                             <span id="comment-date"><%= moment(skatepark.createdAt).fromNow() %></span>
                             <p><%= comment.text %></p>
                             <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
-                                <a class="btn edit btn-sm" 
+                                <a class="btn edit-btn btn-sm" 
                                 href="/skateparks/<%= skatepark._id %>/comments/<%= comment._id %>/edit">
                                 edit
                                 </a>
@@ -85,7 +85,7 @@
                 position: center,
                 map: map
             });
-            marker.addListener('click', function () {
+            marker.addListener('click',  () => {
                 infowindow.open(map, marker);
             });
         }
