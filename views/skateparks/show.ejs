@@ -34,7 +34,7 @@
                         <div class="col-md-12">
                             <hr>
                             <strong><%= comment.author.username %></strong>
-                            <span id="comment-date"><%= moment(skatepark.createdAt).fromNow() %></span>
+                            <span id="comment-date"><%= moment(comment.createdAt).fromNow() %></span>
                             <p><%= comment.text %></p>
                             <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
                                 <a class="btn edit-btn btn-sm" 
