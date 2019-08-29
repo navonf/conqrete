@@ -66,7 +66,6 @@ router.post("/register", upload.single("image"), (req, res) => {
         });
 
         const password = req.body.password;
-        console.log(newUser);
         User.register(newUser, password, (err, user) => {
             if (err) {
                 req.flash("error", err.message);
