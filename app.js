@@ -20,7 +20,7 @@ const   indexRoutes     = require("./routes/index"),
 
 //Connecting the database
 // mongoose.connect("mongodb://localhost:27017/skate_yelp", {useNewUrlParser: true});
-mongoose.connect("mongodb://localhost:27017/conqreteDB", {useNewUrlParser: true});
+mongoose.connect("mongodb+srv://admin:AtlanticTiger%215%0A@cluster0-twtzd.mongodb.net/conqreteDB?retryWrites=true&w=majority", {useNewUrlParser: true});
 mongoose.set('useCreateIndex', true)
 
 
@@ -72,6 +72,6 @@ app.use("/", indexRoutes);
 app.use("/skateparks", skateparkRoutes);
 app.use("/skateparks/:id/comments", commentRoutes);
 
-app.listen(3000, () => {
-    console.log("Server is up an running!");
+app.listen(process.env.PORT || 3000, () => {
+    console.log("Dinner is served!");
 });
