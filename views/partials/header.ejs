@@ -12,20 +12,17 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheets/main.css">
 </head>
-<body>
+<body>  
 
-
-    <nav class="navbar navbar-expand-lg">
-        
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="/">
                 <img src="/images/nav-icon.png" alt="conqrete logo">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon" style="color: black"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
-            
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ml-auto">
                     <% if(!currentUser) { %>
@@ -38,9 +35,7 @@
                 </div>
             </div>
         </div>
-    
     </nav>
-
 
     <div class="container">
         <% if(error && error.length > 0){ %>

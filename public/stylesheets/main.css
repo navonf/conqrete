@@ -25,15 +25,17 @@ ALERTS
 /*
 Navbar
 */
-
-
-
-span.navbar-toggler-icon {
-    color: #363636;
+.bg-light{
+    background-color: white;
 }
 
 .btn {
     border-radius: 0px;
+}
+
+.navbar-light .navbar-toggler {
+    color: rgba(0,0,0);
+    border-color: rgba(255, 255, 255);
 }
 
 nav.navbar a.nav-item.nav-link {
