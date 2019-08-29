@@ -41,36 +41,44 @@ cloudinary.config({ //cloud based file storage for web apps
 
 //INDEX - Displays all the skateparks
 router.get("/", (req, res) => {
-    var perPage = 8;
-    var pageQuery = parseInt(req.query.page);
-    var pageNumber = pageQuery ? pageQuery : 1;
+    let perPage = 8;
+    let pageQuery = parseInt(req.query.page);
+    let pageNumber = pageQuery ? pageQuery : 1;
     let noMatch = null;
     if (req.query.search) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-        // Get all skateparks from DB
-        Skatepark.find({ name: regex }, function (err, allSkateparks) {
-            if (err) {
-                console.log(err);
-            } else {
-                if (allSkateparks.length < 1) {
-                    noMatch = "No skateparks match that query, please try again.";
+        Skatepark.find({ name: regex }).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allskateparks) {
+            Skatepark.countDocuments({ name: regex }).exec(function (err, count) {
+                if (err) {
+                    console.log(err);
+                    res.redirect("back");
+                } else {
+                    if (allskateparks.length < 1) {
+                        noMatch = "No skateparks match that query, please try again.";
+                    }
+                    res.render("skateparks/index", {
+                        skateparks: allskateparks,
+                        current: pageNumber,
+                        pages: Math.ceil(count / perPage),
+                        noMatch: noMatch,
+                        search: req.query.search
+                    });
                 }
-                res.render("skateparks/index", { skateparks: allSkateparks, noMatch: noMatch });
-            }
+            });
         });
     } else {
-        //get all skateparks from db
-        Skatepark.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec( (err, allskateparks) => {
+        // get all skateparks from DB
+        Skatepark.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allskateparks) {
             Skatepark.countDocuments().exec(function (err, count) {
                 if (err) {
                     console.log(err);
-                    req.flash("error", err.message);
                 } else {
                     res.render("skateparks/index", {
                         skateparks: allskateparks,
-                        noMatch: noMatch,
                         current: pageNumber,
-                        pages: Math.ceil(count / perPage)
+                        pages: Math.ceil(count / perPage),
+                        noMatch: noMatch,
+                        search: false
                     });
                 }
             });

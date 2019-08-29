@@ -33,9 +33,13 @@ Navbar
     border-radius: 0px;
 }
 
+span.navbar-toggler-icon {
+    color: #000;
+}
+
+
 .navbar-light .navbar-toggler {
-    color: rgba(0,0,0);
-    border-color: rgba(255, 255, 255);
+    border-color: #fff;
 }
 
 nav.navbar a.nav-item.nav-link {
