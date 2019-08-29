@@ -20,9 +20,8 @@ const   indexRoutes     = require("./routes/index"),
 
 //Connecting the database
 // mongoose.connect("mongodb://localhost:27017/skate_yelp", {useNewUrlParser: true});
-mongoose.connect("mongodb+srv://admin:qm6n%0D%0A@cluster0-twtzd.mongodb.net/conqreteDB?retryWrites=true&w=majority", {useNewUrlParser: true});
+mongoose.connect("mongodb+srv://admin:qm6n@cluster0-twtzd.mongodb.net/conqreteDB?retryWrites=true&w=majority", {useNewUrlParser: true});
 mongoose.set('useCreateIndex', true)
-
 
 //Setting up body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
