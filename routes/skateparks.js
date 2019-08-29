@@ -64,6 +64,7 @@ router.get("/", (req, res) => {
             Skatepark.countDocuments().exec(function (err, count) {
                 if (err) {
                     console.log(err);
+                    req.flash("error", err.message);
                 } else {
                     res.render("skateparks/index", {
                         skateparks: allskateparks,
